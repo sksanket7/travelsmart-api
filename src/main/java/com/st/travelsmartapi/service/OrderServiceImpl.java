@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService{
         NewOrderResponse newOrderResponse = null;
         //call shiprocket api
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:2001/shiprocketapi/newOrder";
+        String url = "https://shiprocket-api.herokuapp.com/shiprocketapi/newOrder";
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService{
         }
         return newOrderResponse;
     }
-
+//const [orderId, setOrderId] = useState('');
     @Override
     public List<Order> getOrders(String userId) {
         List<Order> orderList=new ArrayList<>();
