@@ -31,6 +31,7 @@ public class OrderServiceImpl implements OrderService{
         //call shiprocket api
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:2002/shiprocketapi/newOrder";
+        //String url = "https://shiprocket-api.herokuapp.com/shiprocketapi/newOrder";
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -44,7 +45,7 @@ public class OrderServiceImpl implements OrderService{
             System.out.println(response.getBody());
             ObjectMapper mapper = new ObjectMapper();
             newOrderResponse = mapper.readValue(response.getBody(), NewOrderResponse.class);
-            order.setOrder_id_sr(String.valueOf(newOrderResponse.getOrder_id()));
+            order.setOrderIdSr(String.valueOf(newOrderResponse.getOrder_id()));
             //store shiprocket order id into the order table if it is successful
             orderRepository.save(order);
         } else {
@@ -60,5 +61,28 @@ public class OrderServiceImpl implements OrderService{
         List<Order> orderList=new ArrayList<>();
         orderRepository.findByUserId(userId).forEach(orderList::add);
         return orderList;
+    }
+
+    @Override
+    public Order getOrderDetails(String orderId) {
+        return orderRepository.findByOrderIdSr(orderId);
+    }
+
+    @Override
+    public Object getEstimatedFare(Order order) throws JsonProcessingException {
+
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:2002/shiprocketapi/getEstimatedCourierRate?pickup_postcode="+order.getPickup_pincode()+"&delivery_postcode="+order.getDestination_pincode()+"&cod=0&weight="+order.getWeight();
+        //String url = "https://shiprocket-api.herokuapp.com/shiprocketapi/newOrder";
+
+        //HttpHeaders headers = new HttpHeaders();
+        //headers.add("Content-Type", "application/json");
+        //HttpEntity entity = new HttpEntity(order,headers);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(mapper.writeValueAsString(response));
+        return response;
     }
 }

@@ -11,4 +11,8 @@ public interface OrderService {
     public NewOrderResponse placeNewOrder(Order order) throws JsonProcessingException;
 
     public List<Order> getOrders(String userId);
+
+    Order getOrderDetails(String orderId);
+
+    Object getEstimatedFare(Order order) throws JsonProcessingException;
 }

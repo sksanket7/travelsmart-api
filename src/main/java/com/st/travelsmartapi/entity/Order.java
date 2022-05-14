@@ -3,6 +3,7 @@ package com.st.travelsmartapi.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Order {
 
     @Column(name = "order_id_sr")
     @ApiModelProperty(notes = "order_id_sr")
-    private String order_id_sr;
+    private String orderIdSr;
 
     @Column(name = "ts_user_id")
     @ApiModelProperty(notes = "ts_user_id")
@@ -128,4 +129,12 @@ public class Order {
     @Column(name = "weight")
     @ApiModelProperty(notes = "weight")
     private float weight;
+
+   /* @Column(name = "file")
+    @ApiModelProperty(notes = "file")
+    private MultipartFile file;*/
+
+    /*@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_orderId")
+    private DBFile file;*/
 }

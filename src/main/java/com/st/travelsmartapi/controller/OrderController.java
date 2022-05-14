@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.st.travelsmartapi.dto.NewOrderResponse;
 import com.st.travelsmartapi.entity.Order;
+import com.st.travelsmartapi.entity.UserData;
 import com.st.travelsmartapi.service.OrderService;
+import com.st.travelsmartapi.service.UserService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,9 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    UserService userService;
 
     @PostMapping("/newOrder")
     public NewOrderResponse placeNewOrder(@RequestBody Order order) throws JsonProcessingException {
@@ -37,4 +42,18 @@ public class OrderController {
         return orderService.getOrders(userId);
 
     }
+
+    @GetMapping("/getOrderDetails")
+    public Order getOrderDetails(@PathParam("orderId") String orderId
+    ) throws JsonProcessingException, JSONException {
+
+        System.out.println("ORDER ID: "+orderId);
+        return orderService.getOrderDetails(orderId);
+
+    }
+
+   /* @PostMapping("/register")
+    public void registerUser(@RequestBody UserData userData){
+        userService.registerUser(userData);
+    }*/
 }

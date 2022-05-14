@@ -33,7 +33,7 @@ public class TravelsmartApiApplication implements CommandLineRunner /*extends Sp
 		repositery.save(new UserData("silu",bCryptPasswordEncoder.encode("123")));
 		repositery.save(new UserData("akash",bCryptPasswordEncoder.encode("123")));
 		repositery.save(new UserData("rupam",bCryptPasswordEncoder.encode("123")));*/
-		repositery.save(new UserData("001", bCryptPasswordEncoder.encode("1234"),
+		repositery.save(new UserData("006", bCryptPasswordEncoder.encode("1234"),
 				"sanket", "karvekar", "default", "sksanket7@gmail.com", "9870552471",
 				"flat number: 431, B wing, Silver line Society", "Silverline Society, " +
 				"Sector 17, Kharghar, Navi Mumbai, Pin 410210", "410210",

@@ -15,6 +15,7 @@ import lombok.NonNull;
 @Entity
 public class UserData {
 
+
     @Id
     @NonNull
     @Column(name = "user_name")

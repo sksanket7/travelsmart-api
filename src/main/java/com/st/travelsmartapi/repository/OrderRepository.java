@@ -10,4 +10,6 @@ import java.util.Map;
 @Repository
 public interface OrderRepository extends CrudRepository<Order, String> {
     List<Order> findByUserId(String userId);
+
+    Order findByOrderIdSr(String orderId);
 }

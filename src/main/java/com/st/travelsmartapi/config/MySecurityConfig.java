@@ -42,6 +42,7 @@ public class MySecurityConfig   extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 .antMatchers("/token").permitAll()
                 .antMatchers("/welcome").permitAll()
+                .antMatchers("/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
 

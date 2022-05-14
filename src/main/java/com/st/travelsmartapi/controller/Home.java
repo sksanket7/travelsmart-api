@@ -10,6 +10,7 @@ import com.st.travelsmartapi.service.OrderService;
 import com.st.travelsmartapi.service.UserService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -18,6 +19,8 @@ import java.util.List;
 
 @RestController
 public class Home {
+    @org.springframework.beans.factory.annotation.Autowired(required=true)
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     OrderService orderService;
@@ -57,6 +60,7 @@ public class Home {
 
     @PostMapping("/newOrder")
     public NewOrderResponse placeNewOrder(@RequestBody Order order) throws JsonProcessingException {
+        order.setOrderId( 999 + (int)(Math.random() * ((10000 - 999) + 1)));
         ObjectMapper mapper = new ObjectMapper();
         System.out.println( mapper.writeValueAsString(order));
         //mapper.writeValueAsString("Entire Json: "+ order);
@@ -64,9 +68,10 @@ public class Home {
     }
 
 
-    @GetMapping("/getEstimatedFare")
-    public Object getEstimatedFare() {
-            return null;
+    @PostMapping ("/getEstimatedFare")
+    public Object getEstimatedFare(@RequestBody Order order) throws JsonProcessingException{
+
+            return orderService.getEstimatedFare(order);
         }
 
 
@@ -76,7 +81,13 @@ public class Home {
         return userService.getUserDetails(username);
     }
 
-
+    @PostMapping("/register")
+    public void registerUser(@RequestBody UserData userData){
+        System.out.println("hello register");
+        System.out.println("Data test: "+userData.toString());
+        userData.setPassword(bCryptPasswordEncoder.encode(userData.getPassword()));
+        userService.registerUser(userData);
+    }
 
 }
 
